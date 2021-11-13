@@ -26,16 +26,16 @@ all: clean 1000-7
 
 
 
-1000-7: Linked-list.o main.o tools.o
-	$(CC) $(BuildF)Linked-list.o $(BuildF)main.o $(BuildF)tools.o -o list_main.out
+1000-7: Ghoulinator.o Ghoul_tools.o main.o
+	$(CC) $(BuildF)Ghoulinator.o $(BuildF)main.o $(BuildF)Ghoul_tools.o -o Ghoul.out
 
 
-tools.o: 
-	$(CC) -c $(CFLAGS) src/tools.cpp -o  $(BuildF)tools.o
+Ghoul_tools.o: 
+	$(CC) -c $(CFLAGS) src/Ghoul_tools.cpp -o  $(BuildF)Ghoul_tools.o
 
 
-Linked-list.o: 
-	$(CC) -c $(CFLAGS) src/Linked-list.cpp -o  $(BuildF)Linked-list.o
+Ghoulinator.o: 
+	$(CC) -c $(CFLAGS) src/Ghoulinator.cpp -o  $(BuildF)Ghoulinator.o
 
 main.o:
 	$(CC) -c $(CFLAGS) src/main.cpp -o  $(BuildF)main.o
