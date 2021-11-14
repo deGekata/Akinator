@@ -17,7 +17,7 @@ enum class Answer {
 
 };
 
-Answer ask_mode();
+Answer ask_mode(bool unknown_answer);
 
 bool ask_new_try(bool unknown_answer);
 

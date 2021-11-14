@@ -26,9 +26,15 @@ all: clean 1000-7
 
 
 
-1000-7: Ghoulinator.o Ghoul_tools.o main.o
-	$(CC) $(BuildF)Ghoulinator.o $(BuildF)main.o $(BuildF)Ghoul_tools.o -o Ghoul.out
+1000-7: Ghoulinator.o Ghoul_tools.o main.o Tree.o MyStack.o String_buffer.o
+	$(CC) $(BuildF)Ghoulinator.o $(BuildF)main.o $(BuildF)Ghoul_tools.o $(BuildF)Tree.o $(BuildF)String_buffer.o $(BuildF)MyStack.o -o Ghoul.out
 
+1000-7-debug: Ghoulinator.o Ghoul_tools.o main.o Tree.o MyStack.o String_buffer.o
+	$(CC) -g $(BuildF)Ghoulinator.o $(BuildF)main.o $(BuildF)Ghoul_tools.o $(BuildF)Tree.o $(BuildF)String_buffer.o $(BuildF)MyStack.o -o Ghoul.out
+
+
+Tree.o:
+	$(CC) -c $(CFLAGS)  src/Tree.cpp -o  $(BuildF)Tree.o
 
 Ghoul_tools.o: 
 	$(CC) -c $(CFLAGS) src/Ghoul_tools.cpp -o  $(BuildF)Ghoul_tools.o
@@ -37,8 +43,14 @@ Ghoul_tools.o:
 Ghoulinator.o: 
 	$(CC) -c $(CFLAGS) src/Ghoulinator.cpp -o  $(BuildF)Ghoulinator.o
 
+MyStack.o:
+	$(CC) -c $(CFLAGS) src/MyStack.cpp -o  $(BuildF)MyStack.o
+
 main.o:
 	$(CC) -c $(CFLAGS) src/main.cpp -o  $(BuildF)main.o
+
+String_buffer.o:
+	$(CC) -c $(CFLAGS) src/String_buffer.cpp -o  $(BuildF)String_buffer.o
 
 
 clean:

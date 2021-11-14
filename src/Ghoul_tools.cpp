@@ -2,15 +2,17 @@
 
 
 
-Answer ask_mode() {
+Answer ask_mode(bool unknown_answer) {
     char answer[MAX_ANS_SIZE];
-    printf("Какой режим хотите выбрать?\n"
-           "Доступные режимы:\n"
-           "\tGuess\n"
-           "\tStop\n"
-           "\tDiff\n"
-           "\tDump\n"
-    );
+    if (!unknown_answer) {
+        printf("Какой режим хотите выбрать?\n"
+            "Доступные режимы:\n"
+            "\tGuess\n"
+            "\tStop\n"
+            "\tDiff\n"
+            "\tDump\n"
+        );
+    }
 
     scanf("%" MAX_ANS_SIZE_STR "s", answer);
 
@@ -43,7 +45,14 @@ bool ask_new_try(bool unknown_answer) {
     bool not_correct_answer = true;
     bool ret_val = false;
 
-    if (!unknown_answer) printf("Хотите попробовать ещё раз?\n");
+    if (!unknown_answer) {
+        printf("Хотите попробовать ещё раз?\n");
+    }
+
+    if (unknown_answer) {
+        printf("wtf");
+        return 1;
+    }
 
     while (not_correct_answer) {
         scanf("%" MAX_ANS_SIZE_STR "s", answer);
@@ -70,15 +79,15 @@ bool ask_new_try(bool unknown_answer) {
 
 char* ask_diff_first_p() {
     printf("Назови 1 объект:\n");
-    char* str = NULL;
-    scanf("%ms", str);
+    char* str;
+    scanf("%ms", &str);
     return str;
 }
 
 char* ask_diff_second_p() {
     printf("Назови 2 объект:\n");
-    char* str = NULL;
-    scanf("%ms", str);
+    char* str;
+    scanf("%ms", &str);
     return str;
 }
 
