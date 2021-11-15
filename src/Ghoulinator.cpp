@@ -1,6 +1,9 @@
 #include "../inc/Ghoulinator.hpp"
 
+const size_t Max_cmd_len  = 300;
+const size_t Max_out_file_len = 300;
 
+const char* Img_dump_dir = "./mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/";
 
 void ghoul_constructor(Ghoulinator* ghoul) {
     assert(ghoul && "ghoul ptr is NULL");
@@ -57,7 +60,7 @@ void ghoul_load_base(Ghoulinator* ghoul, FILE* input) {
 
         switch (*cur_char) {
 
-        case '"':
+        case '\'':
             cur_node->data = text.strings[it].begin;
             string_buffer_push(ghoul->string_buff, cur_node->data);
             break;
@@ -167,13 +170,14 @@ void ghoul_predict(Ghoulinator* ghoul) {
         printf("%s???", cur_node->data);
 
         bool answer =  ask_yes_no(true);//cancer if
-        if (answer) {
-            prev_node = cur_node;
+        
+        /*if*/ (answer && ({
+            prev_node = cur_node; 
             cur_node = cur_node->left;
-        } else {
-            prev_node = cur_node;
+        1;})) || /*else*/ ({
+            prev_node = cur_node; 
             cur_node = cur_node->right;
-        }
+        });
     }
 
     printf("Это он %s ?????????????????", cur_node->data);
@@ -276,5 +280,48 @@ void ghoul_get_definition(Ghoulinator* ghoul, char* object) {
     return;
 }
 
-void ghoul_graph_base(Ghoulinator* ghoul);
+void ghoul_graph_base(Ghoulinator* ghoul) {
+    assert(ghoul && "ghoul is null");
+    assert(ghoul->tree && "Aogiri tree is null");
+
+    static int dump_number = 0;
+
+    char filename[Max_out_file_len] = {};
+    sprintf(filename, "/mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/LIST_DMP_№%d.dot", dump_number);
+
+    FILE* file = fopen(filename, "w");
+    assert(file && "cant open file");
+    printf("%p file ptr\n", file);
+    fprintf(file,   "digraph G{"
+                    "   ");
+
+    SafeStack stack;
+    createStack(&stack);
+    pushStack(&stack, (my_type)ghoul->tree);
+
+    Node* cur_node = NULL;
+    while (stack.size > 0) {
+        printf("lol\n");
+        cur_node = (Node*) pop(&stack);
+        fprintf(file, "N%p[label=\"%s\"];\n", cur_node, cur_node->data);
+
+        if (cur_node->left != NULL) {
+            fprintf(file, "N%p->N%p[label=\"+\"];\n", cur_node, cur_node->left);
+            pushStack(&stack, (my_type)cur_node->left);
+        }
+
+        if (cur_node->right != NULL) {
+            fprintf(file, "N%p->N%p[label=\"-\"];\n", cur_node, cur_node->right);
+            pushStack(&stack, (my_type)cur_node->right);
+        }
+         
+    }
+    
+    fprintf(file, "}");
+    fclose(file);
+    char command[Max_cmd_len] = {};
+    sprintf(command, "dot /mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/LIST_DMP_№%d.dot -T png -o /mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/LIST_DMP_№%d.png", dump_number, dump_number);
+    system(command);
+    ++dump_number;
+}
 

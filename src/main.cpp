@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
                 unknown_answer = false;
                 printf("Выгружаю базу данных\n");
                 ghoul_dump_base(&ghoul, "Dump/");
+                ghoul_graph_base(&ghoul);
                 break;
 
             case Answer::DIFF:
