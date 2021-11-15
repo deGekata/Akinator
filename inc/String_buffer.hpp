@@ -20,7 +20,7 @@ void string_buffer_dtor(String_buffer* buff);
 
 void string_buffer_extend(String_buffer* buff);
 
-void string_buffer_push(String_buffer* buff, char* n_elem);
+size_t string_buffer_push(String_buffer* buff, char* n_elem);
 
 char* string_buffer_find_same(String_buffer* buff, char* elem);
 

@@ -12,13 +12,13 @@ void string_buffer_dtor(String_buffer* buff) {
     assert(buff && "buff is NULL");
     assert(buff->data && "buff data ptr is NULL");
     
-    for (size_t it = 0; it < buff->capacity; ++it) {
-        if (buff->data[it] != NULL) {
-            free(buff->data[it]);
-        } else {
-            assert(0 && "buff data element is NULL");
-        }
-    }
+    // for (size_t it = 0; it < buff->size; ++it) {
+    //     if (buff->data[it] != NULL) {
+    //         free(buff->data[it]);
+    //     } else {
+    //         assert(0 && "buff data element is NULL");
+    //     }
+    // }
 
     free(buff->data);
 
@@ -43,7 +43,7 @@ void string_buffer_extend(String_buffer* buff) {
 
 }
 
-void string_buffer_push(String_buffer* buff, char* n_elem) {
+size_t string_buffer_push(String_buffer* buff, char* n_elem) {
     assert(buff && "buff is NULL");
     assert(n_elem && "new elem ptr is NULL");
 
@@ -51,19 +51,24 @@ void string_buffer_push(String_buffer* buff, char* n_elem) {
 
     buff->data[ buff->size++ ] = n_elem;
 
-    return;
+    return buff->size - 1;
 }
 
 char* string_buffer_find_same(String_buffer* buff, char* elem) {
     assert(buff && "buff is NULL");
     assert(buff->data && "buff data ptr is NULL");
 
+    printf("%s target \n", elem);
+
     for (size_t it = 0; it < buff->size; ++it) {
         if (strcasecmp(buff->data[it], elem) == 0) {
             return buff->data[it];
         }
+        // printf("%s comp \n", buff->data[it]);
     }
 
     return NULL;
 }
+
+
 

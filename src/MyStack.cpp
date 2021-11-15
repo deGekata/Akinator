@@ -137,7 +137,9 @@ my_type pop_(SafeStack* st, call_INFO) {
     
     my_type ret_val;
 
-#if PROTECTION_LEVEL == HASH
+#if PROTECTION_LEVEL == NO_PROTECTION
+    ret_val = st->arr[st->size];
+#elif PROTECTION_LEVEL == HASH
     makeApplyHash_(st);
     ret_val = st->arr[st->size];
     return ret_val;

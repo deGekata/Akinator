@@ -1,17 +1,24 @@
 #include "../inc/Ghoulinator.hpp"
 #include "../inc/Ghoul_tools.hpp"
 
+
 int main(int argc, char* argv[]) {
     argc = argc;
     argv = argv;
     Ghoulinator ghoul = {0};
 
-    Ghoul_constructor(&ghoul);
+    ghoul_constructor(&ghoul);
+
+    FILE* fl = fopen("/mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/temp.txt", "r");
+    printf("%d ptr\n", fl);
+    ghoul_load_base(&ghoul, fl);
 
     bool unknown_answer = false;
 
-    do {
+    
+    for (bool skip_body = true; skip_body || unknown_answer || ask_yes_no(unknown_answer); skip_body = false) {
         switch (ask_mode(unknown_answer)) {
+
             case Answer::STOP:
                 printf("Чел ты... 993 значит...\n");
                 break;
@@ -19,16 +26,35 @@ int main(int argc, char* argv[]) {
             case Answer::DUMP:
                 unknown_answer = false;
                 printf("Выгружаю базу данных\n");
+                ghoul_dump_base(&ghoul, "Dump/");
                 break;
 
             case Answer::DIFF:
+                char obj1[40];
+                char obj2[40];
+                scanf("%40s", obj1);
+                scanf("%40s", obj2);
+
                 unknown_answer = false;
                 printf("Разница... Канеки или Кен?))\n");
+
+                ghoul_get_difference(&ghoul, obj1, obj2);
+
                 break;
 
             case Answer::GUESS:
                 unknown_answer = false;
+                ghoul_predict(&ghoul);
                 printf("Начинаю угадывать\n");
+                break;
+
+            case Answer::DEF:
+                unknown_answer = false;
+                char object_name[50];
+                printf("Введите имя объекта(максимальная длина 50):\n");
+                scanf("%50s", object_name);
+                printf("Начинаю искать...\n");
+                ghoul_get_definition(&ghoul, object_name);
                 break;
 
             case Answer::UNKNOWN:
@@ -42,12 +68,17 @@ int main(int argc, char* argv[]) {
                 break;
         }
 
-    } while (ask_new_try(unknown_answer));
+    }
 
-
-
-
-    Ghoul_destructor(&ghoul);
+    
+    
+    ghoul_destructor(&ghoul);
 
     return 0;
 }
+
+
+
+
+
+//18 строка с фором - изменённый do while

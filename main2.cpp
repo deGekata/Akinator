@@ -2,9 +2,12 @@
 #include "stdio.h"
 
 int main() {
-    char c;
+    bool choose = true;
+    (choose  && ({printf("truthy"); true;})) || (({printf("falsy"); true;}));
 
-    scanf("%*c", &c);
-    printf("read char:\"%c\"", c);
+    // for(bool br = true; br && (choose || ({printf("falsy"); false;}))  ; br = false) {
+    //     printf("truthy");
+    // }
+
     return 0;
 }

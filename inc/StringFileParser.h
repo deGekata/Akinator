@@ -1,7 +1,7 @@
 /*!
  * \file StringFileParser.h
  * \author Gekata
- * \brief Parses poem from file
+ * \brief Parses text from file
  */
 
 #ifndef INC_STRING_FILE_PARSER
@@ -9,21 +9,22 @@
 
 #include <stdlib.h>
 #include <assert.h>
+// #include <sys\stat.h>
 #include <stdio.h>
 
 /*!
- * \brief struct with pointers to begin and r_begin
+ * \brief struct with pointers to begin and size
  */
-struct MyStrPair {
+struct MyString {
     char* begin;
-    char* r_begin;
+    size_t size;
 };
 
 /*!
  * \brief container for text string
  */
 struct Text {
-    MyStrPair* strings;
+    MyString* strings;
     size_t lines_cnt;
     size_t text_len;
     char* raw_line;
@@ -32,12 +33,12 @@ struct Text {
 /*!
  * \brief reads Poem from inp to buff, returns pointers to strings from buff
  */
-Text* readPoem (FILE* inp);
+Text* readFromFile (FILE* inp,  char delimiter='\n', char skip_item = '\n');
 
 /*!
  * \brief Get file size from file properties
  */
-int getFileSize (FILE* inp);
+int64_t getFileSize (FILE* inp);
 
 /*!
  * \brief creates special format buffer for Text 
@@ -45,19 +46,19 @@ int getFileSize (FILE* inp);
 char* createFileBuff (size_t file_size);
 
 /*!
- * \brief count lines from text and replaces \n with \0
+ * \brief count lines from text and replaces 'delimiter' with \0
  */
-int countLines (char* text, size_t file_size);
+int countLines (char* text, size_t file_size, char delimiter ='\n', char skip_item = '\n');
 
 /*!
  * \brief Builds String pointers for Text.strings field
  */
-void buildStrPointers (Text* text);
+void buildStrPointers (Text* text, char skip_item = '\n');
 
 /*!
  * \brief constructor for Text from inp file
  */
-void fillText (Text* text, FILE* inp);
+void fillText (Text* text, FILE* inp, char skip_item = '\n');
 
 
 void destructor(Text* text);

@@ -20,10 +20,18 @@ void tree_ctor(Tree* tree);
 
 void tree_dtor(Tree* tree);
 
-Node* tree_find_obj(Node* node, SafeStack* stack, char* target_object);
+bool find_leaf_tree(Tree* tree, SafeStack* stack, char* object);
+
+void print_tree(Tree* tree, FILE* output);
 
 Node* node_ctor();
 
 void node_dtor(Node* node);
+
+bool find_node(Node* node, SafeStack* stack, char* object, bool is_print);
+
+void print_node(Node* node, FILE* output, int* offset);
+
+void print_spacer(FILE* output, int offset);
 
 #endif 
