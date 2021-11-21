@@ -1,0 +1,25 @@
+'Chelovek'
+        {
+        'Devochka'
+            {
+                'Arina'
+            }
+            {
+                'Mujik'
+                        {
+                            'Ded'
+                        }
+                        {
+                            'ne Ded'
+                        }
+            }
+        }
+        {
+        'Kot'
+            {
+                'Poltorashka'
+            }
+            {
+                'Gurd'
+            }
+        }
