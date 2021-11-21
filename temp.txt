@@ -1,37 +1,25 @@
-'Vrednoe'
+'Chelovek'
         {
-        'Bug'
+        'Devochka'
             {
-                'Bug'
+                'Arina'
             }
             {
-                'D'
+                'Mujik'
                         {
-                            'test1'
+                            'Ded'
                         }
                         {
-                            'test2'
+                            'ne Ded'
                         }
             }
         }
         {
-        'D'
+        'Kot'
             {
-            'E'
-                {
-                    'F'
-                }
-                {
-                    'G'
-                }
+                'Poltorashka'
             }
             {
-            'EA'
-                {
-                    'It's in the game'
-                }
-                {
-                    'LOL'
-                }
+                'Gurd'
             }
         }

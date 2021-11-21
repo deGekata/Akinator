@@ -26,8 +26,7 @@ Node* tree_find_obj(Node* node, SafeStack* stack, char* target_object) {
         return node;
     }
 
-    if (node->left != NULL && tree_find_obj(node->left, stack, target_object)) return (Node*)stack->arr[stack->size - 1];
-    
+    if (node->left  != NULL && tree_find_obj(node->left,  stack, target_object)) return (Node*)stack->arr[stack->size - 1];
     if (node->right != NULL && tree_find_obj(node->right, stack, target_object)) return (Node*)stack->arr[stack->size - 1];
 
     pop(stack);
@@ -60,7 +59,6 @@ bool find_leaf_tree(Tree* tree, SafeStack* stack, char* object) {
 
 Node* node_ctor() {
     Node* ret_val = (Node*) calloc(1, sizeof(Node));
-
     return ret_val;
 }
 
@@ -68,11 +66,9 @@ void node_dtor(Node* node) {
     assert(node && "node ptr is NULL");
 
     if (node->left != NULL) node_dtor(node->left);
-
     if (node->right != NULL) node_dtor(node->right);
 
     node->left = node->right = NULL;
-
     node->data = NULL;
 
     free(node);
@@ -91,11 +87,12 @@ bool find_node(Node* node, SafeStack* stack, char* object, bool way) {
             return true;
         }
         
-
         pop(stack);
         pop(stack);
         return false;
+
     } else {
+        
         if (strcasecmp(node->data, object) == 0) {
             pushStack(stack, (my_type)way);            
             pushStack(stack, (my_type)object);
@@ -140,6 +137,7 @@ void print_node(Node* node, FILE* output, int* offset) {
         print_spacer(output, *offset);
         fprintf(output, "}\n");
     }
+
     (*offset)--;
     return;
 }
@@ -149,4 +147,5 @@ void print_spacer(FILE* output, int offset) {
     for (int it = 0; it < offset; ++it) {
             fprintf(output, "    ");
     }
+    return;
 }

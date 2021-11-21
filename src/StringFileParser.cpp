@@ -7,9 +7,6 @@ int64_t getFileSize (FILE* inp) {
     int64_t size = ftell(inp);
     fseek(inp, 0L, SEEK_SET);
     return size;
-    // struct stat file_stat_buff;
-    // fstat (_fileno (inp), &file_stat_buff); //-
-    // return file_stat_buff.st_size;
 }
 
 char* createFileBuff (size_t file_size) {

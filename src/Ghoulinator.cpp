@@ -71,10 +71,12 @@ void ghoul_load_base(Ghoulinator* ghoul, FILE* input) {
             if (!(cur_node->left)) {
                 cur_node->left = node_ctor();
                 cur_node = cur_node->left;
+
             } else {
                 if (cur_node->right) {
                     assert(0 && "invalid db format");
                 }
+
                 cur_node->right = node_ctor();
                 cur_node = cur_node->right;
             }
@@ -88,6 +90,7 @@ void ghoul_load_base(Ghoulinator* ghoul, FILE* input) {
             if ((cur_node->left != NULL && cur_node->right == NULL) || (cur_node->left == NULL && cur_node->right != NULL)) {
                 assert(0 && "invalid db format, vertex cant have only one child");
             }
+
             cur_node = (Node*) pop(&stack);
             break;
 
@@ -103,7 +106,7 @@ void ghoul_load_base(Ghoulinator* ghoul, FILE* input) {
             break;
 
         default:
-            // assert(0 && "symbol error");    
+            assert(0 && "symbol error");    
             break;
 
         }
@@ -167,7 +170,7 @@ void ghoul_predict(Ghoulinator* ghoul) {
     Node* cur_node = ghoul->tree->root;
     
     for(;cur_node->left != NULL;) { //while
-        printf("%s???", cur_node->data);
+        printf("%s???\n", cur_node->data);
 
         bool answer =  ask_yes_no(true);//cancer if
         
@@ -180,7 +183,7 @@ void ghoul_predict(Ghoulinator* ghoul) {
         });
     }
 
-    printf("Это он %s ?????????????????", cur_node->data);
+    printf("Это он %s ?????????????????\n", cur_node->data);
 
     bool answer =  ask_yes_no(true);
     if (answer) {
@@ -226,7 +229,7 @@ void ghoul_get_difference(Ghoulinator* ghoul, char* object1, char* object2) {
     for (; it1 < stack1.size - 1 && it2 < stack2.size - 1; it1 += 2, it2 += 2) {
 
         if ((bool)stack1.arr[it1 + 1] == (bool)stack2.arr[it2 + 1]) {
-            printf("Одинаково: %s\n", ((Node*)stack1.arr[it1])->data);
+            printf("Одинаково: %s\n", ((Node*)stack1.arr[it1])->data);//сделать позера
         }  else {
             break;
         }
@@ -246,11 +249,6 @@ void ghoul_get_difference(Ghoulinator* ghoul, char* object1, char* object2) {
         else 
             printf("Отличие 2 чела: не %s\n", ((Node*)stack2.arr[it2])->data);
     }
-    
-
-    // for (int it = 0; it < stack.size; ++it) {
-    //     printf("%s test\n", ((Node*)stack.arr[it])->data);
-    // }
     
     return;
 }
@@ -272,9 +270,12 @@ void ghoul_get_definition(Ghoulinator* ghoul, char* object) {
 
     bool tree_search_result = find_leaf_tree(ghoul->tree, &stack, object);
     
-
-    for (int it = 0; it < stack.size; ++it) {
-        printf("%s test\n", ((Node*)stack.arr[it])->data);
+    for (int it = 1; it < stack.size; it += 2) {
+        if(!(bool)stack.arr[it + 1]) {
+            printf("%s\n", ((Node*)stack.arr[it])->data);
+        } else {
+            printf("Не %s\n", ((Node*)stack.arr[it])->data);
+        }
     }
     
     return;
@@ -291,6 +292,7 @@ void ghoul_graph_base(Ghoulinator* ghoul) {
 
     FILE* file = fopen(filename, "w");
     assert(file && "cant open file");
+
     printf("%p file ptr\n", file);
     fprintf(file,   "digraph G{"
                     "   ");
@@ -319,9 +321,11 @@ void ghoul_graph_base(Ghoulinator* ghoul) {
     
     fprintf(file, "}");
     fclose(file);
+
     char command[Max_cmd_len] = {};
     sprintf(command, "dot /mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/LIST_DMP_№%d.dot -T png -o /mnt/c/Users/Gekata/Desktop/GitProjects/Ghoulinator/Dump/LIST_DMP_№%d.png", dump_number, dump_number);
     system(command);
+
     ++dump_number;
 }
 

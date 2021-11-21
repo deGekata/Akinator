@@ -15,7 +15,6 @@ int main(int argc, char* argv[]) {
 
     bool unknown_answer = false;
 
-    
     for (bool skip_body = true; skip_body || unknown_answer || ask_yes_no(unknown_answer); skip_body = false) {
         switch (ask_mode(unknown_answer)) {
 
@@ -23,46 +22,51 @@ int main(int argc, char* argv[]) {
                 printf("Чел ты... 993 значит...\n");
                 break;
 
-            case Answer::DUMP:
-                unknown_answer = false;
-                printf("Выгружаю базу данных\n");
-                ghoul_dump_base(&ghoul, "Dump/");
-                ghoul_graph_base(&ghoul);
+            case Answer::DUMP: {
+                    unknown_answer = false;
+                    printf("Выгружаю базу данных\n");
+                    ghoul_dump_base(&ghoul, "Dump/");
+                    ghoul_graph_base(&ghoul);
+                }
+                break;
+            case Answer::DIFF: {
+                    char obj1[40] = "";
+                    char obj2[40] = "";
+                    // fgets(obj1, 40, )
+                    //strchr
+                    scanf("%40s", obj1);//fgets
+                    scanf("%40s", obj2);
+
+                    unknown_answer = false;
+                    printf("Разница... Канеки или Кен?))\n");
+
+                    ghoul_get_difference(&ghoul, obj1, obj2);
+                }
                 break;
 
-            case Answer::DIFF:
-                char obj1[40];
-                char obj2[40];
-                scanf("%40s", obj1);
-                scanf("%40s", obj2);
-
-                unknown_answer = false;
-                printf("Разница... Канеки или Кен?))\n");
-
-                ghoul_get_difference(&ghoul, obj1, obj2);
-
+            case Answer::GUESS: {
+                    unknown_answer = false;
+                    ghoul_predict(&ghoul);
+                    printf("Начинаю угадывать\n");
+                }
+                break;
+            
+            case Answer::DEF: {
+                    unknown_answer = false;
+                    char object_name[50] = "";
+                    printf("Введите имя объекта(максимальная длина 50):\n");
+                    scanf("%50s", object_name);
+                    printf("Начинаю искать...\n");
+                    ghoul_get_definition(&ghoul, object_name);
+                }
+                break;
+            case Answer::UNKNOWN: {
+                    printf("%d unknown ans\n", unknown_answer);
+                    printf("Неизвестный режим. Попробуйте один из перечисленных.\n");
+                    unknown_answer = true;
+                }   
                 break;
 
-            case Answer::GUESS:
-                unknown_answer = false;
-                ghoul_predict(&ghoul);
-                printf("Начинаю угадывать\n");
-                break;
-
-            case Answer::DEF:
-                unknown_answer = false;
-                char object_name[50];
-                printf("Введите имя объекта(максимальная длина 50):\n");
-                scanf("%50s", object_name);
-                printf("Начинаю искать...\n");
-                ghoul_get_definition(&ghoul, object_name);
-                break;
-
-            case Answer::UNKNOWN:
-                printf("%d unknown ans\n", unknown_answer);
-                printf("Неизвестный режим. Попробуйте один из перечисленных.\n");
-                unknown_answer = true;
-                break;
             default:
                 printf("default");
                 unknown_answer = true;
@@ -71,8 +75,6 @@ int main(int argc, char* argv[]) {
 
     }
 
-    
-    
     ghoul_destructor(&ghoul);
 
     return 0;

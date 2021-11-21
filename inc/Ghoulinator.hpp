@@ -18,7 +18,6 @@ void ghoul_destructor(Ghoulinator* ghoul);
 
 void ghoul_load_base(Ghoulinator* ghoul, FILE* input);
 
-
 void ghoul_dump_base(Ghoulinator* ghoul, char* output);
 
 void ghoul_add_object(Ghoulinator* ghoul, Node* prev_node,  Node* ans_node, char* n_object);

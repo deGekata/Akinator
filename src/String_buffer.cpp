@@ -2,6 +2,7 @@
 
 void string_buffer_ctor(String_buffer* buff) {
     assert(buff && "buff is NULL");
+    
     buff->data = (char**) calloc(STRING_BUFF_BASE_SIZE, sizeof(char*));
     buff->size = 0;
     buff->capacity = STRING_BUFF_BASE_SIZE;
@@ -11,14 +12,6 @@ void string_buffer_ctor(String_buffer* buff) {
 void string_buffer_dtor(String_buffer* buff) {
     assert(buff && "buff is NULL");
     assert(buff->data && "buff data ptr is NULL");
-    
-    // for (size_t it = 0; it < buff->size; ++it) {
-    //     if (buff->data[it] != NULL) {
-    //         free(buff->data[it]);
-    //     } else {
-    //         assert(0 && "buff data element is NULL");
-    //     }
-    // }
 
     free(buff->data);
 
@@ -30,7 +23,6 @@ void string_buffer_extend(String_buffer* buff) {
     assert(buff->data && "buff data ptr is NULL");
 
     if (buff->size < buff->capacity) return;
-
 
     char** n_ptr = (char**) realloc(buff->data, sizeof(char*) * buff->capacity * STRING_BUFF_EXTEND_SIZE);
 

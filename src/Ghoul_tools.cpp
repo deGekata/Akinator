@@ -54,7 +54,6 @@ bool ask_yes_no(bool unknown_answer) {
         printf("Хотите попробовать ещё раз?\n");
     }
 
-
     for (;not_correct_answer;) {
         scanf("%" MAX_ANS_SIZE_STR "s", answer);
 
