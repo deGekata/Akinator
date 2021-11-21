@@ -180,7 +180,7 @@ void ghoul_predict(Ghoulinator* ghoul) {
         1;})) || /*else*/ ({
             prev_node = cur_node; 
             cur_node = cur_node->right;
-        });
+        }); 
     }
 
     printf("Это он %s ?????????????????\n", cur_node->data);
